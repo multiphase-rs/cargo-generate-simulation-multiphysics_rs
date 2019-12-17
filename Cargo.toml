@@ -1,0 +1,21 @@
+[package]
+name = "{{project-name}}"
+version = "0.1.0"
+authors = ["{{authors}}"]
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+edition = "2018"
+
+[dependencies]
+docopt = "1"
+rayon = { path = "../../../../../../rusting/rayon"}
+neighbours_rs = {path = "../../../../../../rusting/neighbours_rs"}
+simple_shapes = {path = "../../../../../../rusting/simple_shapes"}
+multiphysics_rs = {path = "../../../../../../rusting/multiphysics_rs"}
+cgmath = "0.17.0"
+rand = "0.7.2"
+serde = "1"
+serde_derive = "1"
+gnuplot = "0.0.32"
+# A local crate name used. As an example: bonded dem or SPH which is not in multiphase_rs
+dem_rust = {path = "../../"}
