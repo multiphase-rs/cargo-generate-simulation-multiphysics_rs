@@ -45,6 +45,7 @@ pub use dem_rust::rb::rb_2d::Rigidbody2D;
 
 #[derive(Deserialize, Debug)]
 pub struct Args {
+    flag_tf: f64,
     flag_dt: f64,
     flag_plots: bool,
 }
@@ -63,23 +64,23 @@ pub fn main(args: &[String]) {
     // --------------------------------------
 
     // --------------------------------------
-    // Create particle arrays
+    // CREATE PARTICLE ARRAYS
     // --------------------------------------
     // Uncomment here to create particle arrays
     // --------------------------------------
-    // Create particle arrays
+    // CREATE PARTICLE ARRAYS ENDS
     // --------------------------------------
 
     // ---------------------------------------
-    // setup corresponding nbs nnps
+    // SETUP CORRESPONDING NBS NNPS
     // ----------------------------------------
     // Uncomment here to create neighbours list data structure
     // ---------------------------------------
-    // setup corresponding nbs nnps
+    // SETUP CORRESPONDING NBS NNPS ENDS
     // ----------------------------------------
 
     // ----------------------------------------
-    // solver data
+    // SOLVER DATA
     // ----------------------------------------
     let tf = args.tf;
     let dt = args.dt;
@@ -87,61 +88,99 @@ pub fn main(args: &[String]) {
     let mut t = 0.;
     let mut step_no = 0;
     let total_output_file = 1000;
-    let pfreq = total_steps / total_output_file;
+    let pfreq = if total_steps < total_output_file {
+        1
+    } else {
+        total_steps / total_output_file
+    };
     // ----------------------------------------
-    // solver data
+    // SOLVER DATA ENDS
     // ----------------------------------------
 
     // ----------------------------------------
-    // output directory
+    // OUTPUT DIRECTORY
     // ----------------------------------------
     let project_root = env!("CARGO_MANIFEST_DIR");
     let dir_name = project_root.to_owned() + "/test_1_output";
     let _p = fs::create_dir(&dir_name);
     // ----------------------------------------
-    // output directory
+    // OUTPUT DIRECTORY ENDS
     // ----------------------------------------
 
     // ----------------------------------------
-    // some constants
+    // SOME CONSTANTS
     // ----------------------------------------
     let stage1 = 1;
     let stage2 = 2;
     // coefficient of friction
     let mu = 0.5;
     // ----------------------------------------
-    // some constants
+    // SOME CONSTANTS ENDS
     // ----------------------------------------
 
     // create a progress bar
     let pb = setup_progress_bar(total_steps);
 
+    // -------------------------------
+    // FOR PARAVIEW VISUALIZATION
+    // -------------------------------
+    // define variables for automatic visualization
+
+    // particle array files
+    // let mut sand_files = "".to_string();
+    // write_to_vtk!(sand, format!("{}/sand_{}.vtk", &dir_name, step_no));
+    // sand_files.push_str(&format!("'{}/sand_{}.vtk', ", &dir_name, step_no));
+
+    // // neighbours files
+    // let mut nnps_files = "".to_string();
+    // write_nnps_2d_to_vtk!(nbs2d_sand, format!("{}/nnps.vtk", &dir_name));
+    // nnps_files.push_str(&format!("'{}/nnps.vtk'", &dir_name));
+    // -------------------------------
+    // FOR PARAVIEW VISUALIZATION ENDS
+    // -------------------------------
+
+    // -------------------------------
+    // POST PROCESSING VARIABLES
+    // -------------------------------
+    // uncomment and initialize the variables
+    // -------------------------------
+    // POST PROCESSING VARIABLES ENDS
+    // -------------------------------
+
     while t < tf {
         // ----------------------
-        // Rk2 initialize
+        // RK2 INITIALIZE
         // ----------------------
 
         // ----------------------
-        // stage 1 equations
+        // STAGE 1 EQUATIONS
         // ----------------------
 
         // ----------------------
-        // stage 1 stepper
+        // STAGE 1 STEPPER
         // ----------------------
 
         // ----------------------
-        // stage 2 equations
+        // STAGE 2 EQUATIONS
         // ----------------------
 
         // ----------------------
-        // stage 2 stepper
+        // STAGE 2 STEPPER
         // ----------------------
 
         // ----------------------
-        // output the vtk file
+        // OUTPUT THE VTK FILE AND WRITE ALL FILES DATA
         // ----------------------
         if step_no % pfreq == 0 && step_no != 0{
+            // ----------------------
+            // WRITE DATA TO VTK FILE
+            // ----------------------
             // write_to_vtk!(sand, format!("{}/sand_{}.vtk", &dir_name, step_no));
+
+            // ----------------------
+            // FOR PARAVIEW AUTOMATION
+            // ----------------------
+            // sand_files.push_str(&format!("'{}/sand_{}.vtk', ", &dir_name, step_no));
         }
 
         step_no += 1;
@@ -155,7 +194,7 @@ pub fn main(args: &[String]) {
 
 
     // ---------------------------------------
-    // Plotting
+    // PLOTTING
     // ---------------------------------------
     // UNCOMMENT AND USE THE PLOTTING FACILITY
     // let (incident_angle_experiment_kharaz, rebound_angle_experiment_kharaz) =
@@ -204,5 +243,8 @@ pub fn main(args: &[String]) {
     // if args.flag_plots {
     //     fg.show().unwrap();
     // }
+    // ---------------------------------------
+    // PLOTTING ENDS
+    // ---------------------------------------
 
 }
